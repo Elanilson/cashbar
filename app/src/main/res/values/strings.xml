@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CashBar</string>
+    <string name="categorias">Categorias</string>
+    <string name="resumo_pedido">Resumo do pedido</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="valor">Valor:.............................................. R$ 493,00</string>
+    <string name="comissionamento">Comissionamento 10%:................ R$ 493,00</string>
+    <string name="couvert">Couvert Artístico:.......................... R$ 493,00</string>
+    <string name="valorTotal">Valor Total:.................................... R$ 493,00</string>
+
+    <string name="gerar_cobranca">Gerar cobrança</string>
+    <string name="adicionar_mais_itens">Adicionar + itens</string>
+</resources>
