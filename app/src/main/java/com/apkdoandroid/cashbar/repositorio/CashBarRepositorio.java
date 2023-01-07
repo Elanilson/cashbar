@@ -1,16 +1,27 @@
 package com.apkdoandroid.cashbar.repositorio;
 
+import android.content.Context;
+
 import com.apkdoandroid.cashbar.listeners.APIListener;
 import com.apkdoandroid.cashbar.model.Categoria;
 import com.apkdoandroid.cashbar.model.Dados;
+import com.apkdoandroid.cashbar.model.Produto;
+import com.apkdoandroid.cashbar.repositorio.local.BancoRoom;
+import com.apkdoandroid.cashbar.repositorio.local.interfaces.ProdutoDao;
 import com.apkdoandroid.cashbar.repositorio.services.CashBarService;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CashBarRepositorio {
+
     private CashBarService service = RetrofitClient.classService(CashBarService.class);
+
+
+
 
     public void getCategorias(APIListener<Dados> listener){
 
@@ -27,4 +38,8 @@ public class CashBarRepositorio {
             }
         });
     }
+
+
+
+
 }

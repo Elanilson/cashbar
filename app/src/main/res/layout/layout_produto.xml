@@ -76,7 +76,7 @@
                         app:srcCompat="@drawable/ic_menos_24" />
 
                     <TextView
-                        android:id="@+id/textViewItemSacolaQuantidade"
+                        android:id="@+id/textViewItemQuantidade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="7dp"
@@ -98,7 +98,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonAdicionarProdutoCarrinho"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/adicionar"

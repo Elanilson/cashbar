@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.apkdoandroid.cashbar.R;
 import com.apkdoandroid.cashbar.adapter.CategoriaAdapter;
@@ -20,6 +22,7 @@ import com.apkdoandroid.cashbar.databinding.FragmentCategoriasBinding;
 import com.apkdoandroid.cashbar.listeners.OnListenerAcao;
 import com.apkdoandroid.cashbar.model.Categoria;
 import com.apkdoandroid.cashbar.model.Produto;
+import com.apkdoandroid.cashbar.model.Respota;
 import com.apkdoandroid.cashbar.viewmodel.CategoriasViewModel;
 
 import java.util.List;
@@ -29,6 +32,7 @@ public class CategoriasFragment extends Fragment {
     protected CategoriasViewModel viewModel;
     private CategoriaAdapter adapterCategoria = new CategoriaAdapter();
     private ProdutosAdapter produtosAdapter = new ProdutosAdapter();
+
 
 
 
@@ -52,6 +56,7 @@ public class CategoriasFragment extends Fragment {
         binding.recyclerviewCategorias.setAdapter(adapterCategoria);
 
 
+
         GridLayoutManager grid = new GridLayoutManager(binding.getRoot().getContext(),2);
         manager.setOrientation(RecyclerView.HORIZONTAL);
         binding.recyclerviewProdutos.setLayoutManager(grid);
@@ -59,10 +64,10 @@ public class CategoriasFragment extends Fragment {
 
 
 
-        OnListenerAcao<Produto> listenerProdutos = new OnListenerAcao<Produto>() {
+        OnListenerAcao<Produto> listenerProduto = new OnListenerAcao<Produto>() {
             @Override
             public void onClick(Produto obj) {
-
+                viewModel.adiconarProduto(obj);
             }
 
             @Override
@@ -71,7 +76,7 @@ public class CategoriasFragment extends Fragment {
             }
         };
 
-        produtosAdapter.attackListenerAcao(listenerProdutos);
+        produtosAdapter.attackListenerAcao(listenerProduto);
 
         OnListenerAcao<Categoria> listenerCategoria = new OnListenerAcao<Categoria>() {
             @Override
@@ -93,6 +98,25 @@ public class CategoriasFragment extends Fragment {
     }
 
     private void observe() {
+        viewModel.resposta.observe(getViewLifecycleOwner(), new Observer<Respota>() {
+            @Override
+            public void onChanged(Respota respota) {
+                if(respota.getStatus()){
+
+                    Toast.makeText(getActivity(), respota.getMensagem(), Toast.LENGTH_SHORT).show();
+                    viewModel.carregarTotal();
+                }else{
+                    Toast.makeText(getActivity(), respota.getMensagem(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        viewModel.total.observe(getViewLifecycleOwner(), new Observer<Float>() {
+            @Override
+            public void onChanged(Float aFloat) {
+                String valorFormatado = String.format("%.2f",aFloat).replace(".",",");
+                binding.textViewTotalCarrinho.setText(valorFormatado);
+            }
+        });
         viewModel.produtos.observe(getViewLifecycleOwner(), new Observer<List<Produto>>() {
             @Override
             public void onChanged(List<Produto> produtos) {
@@ -107,5 +131,11 @@ public class CategoriasFragment extends Fragment {
                 adapterCategoria.attackCategorias(categorias);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.carregarTotal();
     }
 }
