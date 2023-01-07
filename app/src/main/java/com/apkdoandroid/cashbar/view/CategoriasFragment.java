@@ -98,12 +98,23 @@ public class CategoriasFragment extends Fragment {
     }
 
     private void observe() {
+        viewModel.quantidade.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer quantidade) {
+                if(quantidade > 0){
+                  binding.textViewTotalItens.setText("Total "+quantidade+" itens");
+                }else{
+                  binding.textViewTotalItens.setText("Total");
+                }
+
+            }
+        });
         viewModel.resposta.observe(getViewLifecycleOwner(), new Observer<Respota>() {
             @Override
             public void onChanged(Respota respota) {
                 if(respota.getStatus()){
 
-                    Toast.makeText(getActivity(), respota.getMensagem(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getActivity(), respota.getMensagem(), Toast.LENGTH_SHORT).show();
                     viewModel.carregarTotal();
                 }else{
                     Toast.makeText(getActivity(), respota.getMensagem(), Toast.LENGTH_SHORT).show();
@@ -137,5 +148,6 @@ public class CategoriasFragment extends Fragment {
     public void onResume() {
         super.onResume();
         viewModel.carregarTotal();
+        viewModel.getQuantidadeCarrinho();
     }
 }

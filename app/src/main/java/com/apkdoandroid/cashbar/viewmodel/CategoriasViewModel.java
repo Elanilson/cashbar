@@ -26,6 +26,9 @@ public class CategoriasViewModel extends AndroidViewModel {
 
     private List<Categoria> listaTemporaria = new ArrayList<>();
 
+    private MutableLiveData<Integer> _Quantidade = new MutableLiveData<>();
+    public LiveData<Integer> quantidade = _Quantidade;
+
     private MutableLiveData<Respota> _Resposta = new MutableLiveData<>();
     public LiveData<Respota> resposta = _Resposta;
 
@@ -129,7 +132,7 @@ public class CategoriasViewModel extends AndroidViewModel {
 
             }
         }
-
+        getQuantidadeCarrinho();
     }
 
     public void atualizarProduto(Produto produto){
@@ -146,14 +149,26 @@ public class CategoriasViewModel extends AndroidViewModel {
     //    if(produto.getQuantidade() == 0){
             if(carrinhoRepositorio.delete(produto)){
                 _Resposta.setValue(new Respota(true,"Removido"));
+                getQuantidadeCarrinho();
             }else{
                 _Resposta.setValue(new Respota("Não foi possível remover"));
             }
      //   }
     }
 
-    public List<Produto> carregarProdutosDoCarrinho(){
-        return carrinhoRepositorio.getAll();
+    public void carregarProdutosDoCarrinho(){
+        // carrinhoRepositorio.getAll();
+    }
+
+    public void getQuantidadeCarrinho(){
+        System.out.println("chamouuu");
+        int quantidade = 0 ;
+
+        for(Produto produto : carrinhoRepositorio.getAll()){
+            quantidade += produto.getQuantidade();
+        }
+
+        _Quantidade.setValue(quantidade);
     }
 
     public void carregarTotal(){

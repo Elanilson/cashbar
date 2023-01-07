@@ -20,7 +20,7 @@ public class Produto {
     @ColumnInfo(name = "imagem")
     private String imagem;
     @ColumnInfo(name = "quantidade")
-    private int quantidade;
+    private int quantidade = 1;
 
 
     public Produto() {
